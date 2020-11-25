@@ -14,3 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::resource('/task', 'TaskController', ['only' => ['index', 'create', 'edit', 'show', 'update', 'destroy', 'store']]);
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
