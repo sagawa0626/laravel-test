@@ -13,6 +13,4 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/task', 'TaskController', ['only' => ['index', 'create', 'edit', 'show', 'update', 'destroy', 'store']]);
