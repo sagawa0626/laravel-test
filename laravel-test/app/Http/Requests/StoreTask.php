@@ -13,7 +13,7 @@ class StoreTask extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
 
@@ -21,7 +21,7 @@ class StoreTask extends FormRequest
 
 
 
-    
+
     /**
      * Get the validation rules that apply to the request.
      *

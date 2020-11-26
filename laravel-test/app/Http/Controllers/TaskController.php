@@ -61,7 +61,8 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        //
+        $task = Task::find($id);
+        return view('task.edit', compact('task'));
     }
 
     /**
@@ -71,9 +72,16 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreTask $request, $id)
     {
-        //
+        $update = [
+            'subject' => $request->subject,
+            'description' => $request->description,
+            'completed' => $request->completed,
+            'complete_date' => $request->complete_date,
+        ];
+        Task::where('id', $id)->update($update);
+        return back()->with('success', '編集完了しました');
     }
 
     /**
