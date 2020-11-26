@@ -21,7 +21,6 @@ class StoreTask extends FormRequest
      *
      * @return array
      */
-
     public function rules()
     {
         return [
