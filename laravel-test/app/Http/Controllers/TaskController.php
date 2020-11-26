@@ -37,7 +37,8 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Task::create($request->all());
+        return redirect()->route('task.index')->with('success', '新規登録完了');
     }
 
     /**
