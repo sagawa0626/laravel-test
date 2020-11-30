@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Task extends Model
 {
@@ -12,4 +13,10 @@ class Task extends Model
         'complete_date',
         'completed',
     ];
+
+    public function user():BelongsTo
+    {
+        return $this->belongsTo('App\User');
+    }
+    
 }

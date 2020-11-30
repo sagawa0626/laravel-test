@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Task;
 use App\Http\Requests\StoreTask;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -15,8 +16,9 @@ class TaskController extends Controller
      */
     public function index()
     {
+        $user = Auth::user();
         $tasks = Task::all()->sortByDesc("id");
-        return view('task.index', compact('tasks'));
+        return view('task.index', compact('user', 'tasks'));
     }
 
     /**
@@ -37,7 +39,14 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        Task::create($request->all());
+        $tasks = new Task;
+        $tasks->subject = $request->subject;
+        $tasks->description = $request->description;
+        $tasks->completed = $request->completed;
+        $tasks->user_id = Auth::user()->id;
+
+        $tasks->save();
+        
         return redirect()->route('task.index')->with('success', '新規登録完了');
     }
 
@@ -81,7 +90,7 @@ class TaskController extends Controller
             'complete_date' => $request->complete_date,
         ];
         Task::where('id', $id)->update($update);
-        return back()->with('success', '編集完了しました');
+        return back()->with('success', '完了しました');
     }
 
     /**
@@ -92,6 +101,7 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Task::where('id', $id)->delete();
+        return redirect()->route('task.index')->with('success', '1件のタスクを削除しました');
     }
 }
