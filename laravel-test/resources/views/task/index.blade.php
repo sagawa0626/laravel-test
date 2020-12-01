@@ -3,6 +3,14 @@
 @section('content')    
     <h2>一覧画面</h2>
     <p><a href="{{ route('task.create') }}" class="btn btn-outline-success">新規追加</a></p>
+    <p><a href="{{ route('task.index') }}" class="btn btn-outline-success">一覧画面</a></p>
+
+    <form action="/search" method="post">
+        @csrf
+        <input type="text" name="word" size="40">
+        <input type="submit" class="btn btn-primary" value="タスクを検索">
+    </form>
+
 
     @if ($message = Session::get('success'))
     <h1 class="text-danger">{{ $message }}</h1>
@@ -20,7 +28,7 @@
         </thead>
         <tbody>
             @foreach ($tasks as $task)
-                @if ($task->user_id == $user->id)
+                @if ($task->user_id == Auth::id())
                     <tr>
                         <th>{{ $task->subject }}</th>
                         <th><a href="{{ route('task.show',$task->id)}}">詳細</a></th>

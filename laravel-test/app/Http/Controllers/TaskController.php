@@ -16,9 +16,9 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
+        
         $tasks = Task::all()->sortByDesc("id");
-        return view('task.index', compact('user', 'tasks'));
+        return view('task.index', compact('tasks'));
     }
 
     /**
@@ -103,5 +103,15 @@ class TaskController extends Controller
     {
         Task::where('id', $id)->delete();
         return redirect()->route('task.index')->with('success', '1件のタスクを削除しました');
+    }
+
+    public function search(Request $request)
+    {
+        $word = $request->word;
+        if ($word != '') {
+            $tasks = Task::where('subject', 'like', '%' .$word. '%')->orWhere('description', 'like', '%' .$word. '%')->get();
+        } 
+
+        return view('task.index', compact('tasks'));
     }
 }

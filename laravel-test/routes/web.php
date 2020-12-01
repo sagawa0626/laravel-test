@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Auth::routes();
+Route::post('/search', 'TaskController@search');
 
 Route::resource('/task', 'TaskController', ['only' => ['index', 'create', 'edit', 'show', 'update', 'destroy', 'store']])->middleware('auth');
 
