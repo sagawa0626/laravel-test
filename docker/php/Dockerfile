@@ -10,4 +10,16 @@ vim
 RUN apt-get update \
     && apt-get install -y libpq-dev \
     && docker-php-ext-install pdo_mysql pdo_pgsql
-WORKDIR /var/www/html
+#Composer install
+COPY --from=composer /usr/bin/composer /usr/bin/composer
+ 
+ENV COMPOSER_ALLOW_SUPERUSER 1
+ 
+ENV COMPOSER_HOME /composer
+ 
+ENV PATH $PATH:/composer/vendor/bin
+ 
+ 
+WORKDIR /var/www
+ 
+RUN composer global require "laravel/installer"
