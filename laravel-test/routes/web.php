@@ -18,4 +18,6 @@ Route::post('/search', 'TaskController@search');
 
 Route::resource('/task', 'TaskController', ['only' => ['index', 'create', 'edit', 'show', 'update', 'destroy', 'store']])->middleware('auth');
 
+Route::get('/', 'TaskController@index')->middleware('auth');
+
 Route::get('/home', 'HomeController@index')->name('home');
